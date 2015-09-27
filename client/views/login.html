@@ -1,0 +1,20 @@
+<div ng-if="!token">
+  <form class="ui form">
+    <div class="field">
+      <label>Username</label>
+      <input ng-model="email" placeholder="Username" type="text">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input ng-model="password" placeholder="example@domain.com" type="password">
+    </div>
+    <div class="ui buttons">
+      <button class="ui blue button" type="submit" ng-click="login(email, password)">Login</button>
+      <div class="or"></div>
+      <button class="ui greeb button" type="submit" ng-click="register(email, password)">Register</button>
+    </div>
+  </form>
+</div>
+<div ng-if="token">
+  {{token}}
+</div>
