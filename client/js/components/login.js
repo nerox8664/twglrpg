@@ -9,11 +9,10 @@ app
         controller: ['$scope', '$http', '$window',
           function($scope, $http, $window) {
             $scope.loginError = false;
-            $scope.token = false;
+            $scope.user = false;
 
-            authService.token.addObserver(() => {
-              $scope.loginError = false;
-              $scope.token = authService.token;
+            authService.user.addObserver(() => {
+              $scope.user = authService.user.get();
             });
 
             $scope.login = function(email, password) {

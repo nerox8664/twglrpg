@@ -1,15 +1,12 @@
 app
-  .service('gameService', function($q, $http, $cookies, Observable) {
-    this.socket = io('http://localhost:8089');
+  .service('gameService', function($q, $http, $cookies, authService, socketService, Observable) {
     this.game = null;
 
     this.setMap = (chunk) => {
       this.map = this.game.add.tilemap();
-
       this.map.addTilesetImage(chunk.image);
       this.layer = this.map.create(chunk.layerName, chunk.size[0], chunk.size[1], chunk.tileSize[0], chunk.tileSize[1]);
       this.layer.resizeWorld();
-
       for (var i = 0; i < chunk.size[1]; i++) {
         for (var j = 0; j < chunk.size[0]; j++) {
           this.map.putTile(chunk.tiles[(i * chunk.size[0] + j) % chunk.tiles.length] , j, i, this.layer);
@@ -33,31 +30,27 @@ app
         this.character.height = 32;
         this.game.camera.follow(this.character);
       });
-    };
+    }
 
     this.update = () => {
       if (this.cursors.left.isDown) {
-        this.socket.emit('game.character.movement', {
-          dx: -16,
-          dy: 0,
+        socketService.action('character.movement', {
+          direction: 'left',
         });
       }
       if (this.cursors.right.isDown) {
-        this.socket.emit('game.character.movement', {
-          dx: 16,
-          dy: 0,
+        socketService.action('character.movement', {
+          direction: 'right',
         });
       }
       if (this.cursors.up.isDown) {
-        this.socket.emit('game.character.movement', {
-          dx: 0,
-          dy: -16,
+        socketService.action('character.movement', {
+          direction: 'up',
         });
       }
       if (this.cursors.down.isDown) {
-        this.socket.emit('game.character.movement', {
-          dx: 0,
-          dy: 16,
+        socketService.action('character.movement', {
+          direction: 'down',
         });
       }
     }
@@ -65,4 +58,4 @@ app
     this.render = () => {
       this.game.debug.cameraInfo(this.game.camera, 50, 32);
     }
-  })
+  });

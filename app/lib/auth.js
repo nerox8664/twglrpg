@@ -4,9 +4,9 @@ var jwt = require('jwt-simple');
 
 module.exports = (req, res, next) => {
   if (req.cookies && req.cookies.token) {
-    var token = jwt.decode(req.cookies.token, config.jwtSecret);
-    if (token.expire > Math.floor(Date.now() / 1000)) {
-      User.findOneInCache({_id: token.user}, (err, user) => {
+    req.token = jwt.decode(req.cookies.token, config.jwtSecret);
+    if (req.token.expire > Math.floor(Date.now() / 1000)) {
+      User.findOneInCache({_id: req.token.user}, (err, user) => {
         req.user = user;
         next();
       });

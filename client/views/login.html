@@ -1,4 +1,4 @@
-<div ng-if="!token">
+<div ng-if="!user">
   <form class="ui form">
     <div class="field">
       <label>Username</label>
@@ -15,6 +15,6 @@
     </div>
   </form>
 </div>
-<div ng-if="token">
-  {{token}}
+<div ng-if="user">
+  Logged in as {{user.email}}
 </div>

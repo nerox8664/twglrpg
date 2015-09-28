@@ -5,6 +5,7 @@ module.exports = (socket) => {
     movement: (data) => {
       if (Math.abs(data.dx) > 64 || Math.abs(data.dy) > 64) {
       } else {
+        console.log('move');
       }
     },
   };

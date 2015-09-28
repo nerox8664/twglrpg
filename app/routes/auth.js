@@ -7,10 +7,8 @@ var router = express.Router();
 
 router.get('/status', (req, res) => {
   if (req.user) {
-    var token = jwt.encode({
-      user: req.user._id,
-      expire: Math.floor(Date.now() / 1000) + config.cookieLifetime,
-    }, config.jwtSecret);
+    req.token.expire = Math.floor(Date.now() / 1000) + config.cookieLifetime;
+    var token = jwt.encode(req.token, config.jwtSecret);
     res.send({
       token: token,
       user: req.user,
