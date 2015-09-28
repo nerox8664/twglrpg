@@ -34,7 +34,7 @@
     },
     "phaser": {
       "main": [
-        "./build/phaser.min.js"
+        "./build/phaser.js"
       ]
     },
     "lodash": {

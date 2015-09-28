@@ -16,7 +16,7 @@ global.appRoot = __dirname + '/../'
 global.__base = __dirname + '/';
 global.config = require(__dirname + '/config.js');
 
-mongoose.connect('mongodb://localhost/rpg');
+mongoose.connect(global.config.mongoConnectionString);
 
 // Attach express middleware
 app.use(cookieParser());

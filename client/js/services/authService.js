@@ -1,5 +1,5 @@
 app
-  .service('authService', function($q, $http, $cookies, Observable) {
+  .service('authService', function($q, $http, $cookies, $interval, Observable) {
     this.user = new Observable(null);
     this.token = new Observable(null);
 
@@ -34,9 +34,9 @@ app
         .success((res) => {
           return this.checkLogin(res);
         })
-    }
+    };
 
-    this.register = function(email, password) {
+    this.register = (email, password) => {
       return $http
         .post('/auth/register', {
           email: email,
@@ -47,5 +47,7 @@ app
         });
     }
 
-    this.authStatus();
+    $interval(() => {
+      this.authStatus();
+    }, 5000);
   })

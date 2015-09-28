@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var UserSchema = Schema({
+var UserSchema = new Schema({
   email: {
     type: String,
     required: true,
@@ -15,5 +15,17 @@ var UserSchema = Schema({
     ref: 'Character',
   }],
 });
+
+var cache = {};
+UserSchema.statics.findOneInCache = (query, cb) => {
+  var Model = mongoose.model('User');
+  if (cache[query]) {
+    return cb(null, cache[query]);
+  };
+  return Model.findOne(query, (err, user) => {
+    cache[query] = user;
+    cb(err,user);
+  });
+}
 
 module.exports = mongoose.model('User', UserSchema, 'users');

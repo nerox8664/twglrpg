@@ -1,6 +1,6 @@
 app
   .directive('game',
-    function(authService) {
+    function(authService, gameService) {
       return {
         restrict: 'E',
         scope: {},
@@ -8,8 +8,20 @@ app
         templateUrl: 'game.html',
         controller: ['$scope', '$http', '$window',
           function($scope, $http, $window) {
+            $scope.loaded = false;
             authService.token.addObserver(() => {
-              var g = new Game();
+              gameService.game = new Phaser.Game(
+                $('#game-canvas').width(),
+                $('#game-canvas').height(),
+                Phaser.AUTO,
+                'game-canvas',
+                {
+                  preload: _.bind(gameService.preload, gameService),
+                  create: _.bind(gameService.create, gameService),
+                  update: _.bind(gameService.update, gameService),
+                  render: _.bind(gameService.render, gameService),
+                }
+              );
             });
           }
         ]

@@ -3,6 +3,7 @@ var randomstring = require('randomstring');
 var jwtSecret = randomstring.generate(32);
 
 module.exports = {
-  jwtSecret: jwtSecret,
-  cookieLifetime: 5 * 60,
+  mongoConnectionString: 'mongodb://localhost/rpg',
+  jwtSecret: 'jwtSecret',
+  cookieLifetime: 5 * 60 * 60,
 }

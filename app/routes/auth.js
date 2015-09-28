@@ -9,7 +9,7 @@ router.get('/status', (req, res) => {
   if (req.user) {
     var token = jwt.encode({
       user: req.user._id,
-      expire: Math.floor(Date.now() / 1000) + 30,
+      expire: Math.floor(Date.now() / 1000) + config.cookieLifetime,
     }, config.jwtSecret);
     res.send({
       token: token,
@@ -27,7 +27,7 @@ router.post('/register', (req, res) => {
   user.save((err, user) => {
     var token = jwt.encode({
       user: user._id,
-      expire: Math.floor(Date.now() / 1000) + 30,
+      expire: Math.floor(Date.now() / 1000) + config.cookieLifetime,
     }, config.jwtSecret);
     res.send({
       token: token,
@@ -37,14 +37,14 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  User.findOne({
+  User.findOneInCache({
     email: req.body.email,
     password: req.body.password,
   }, (err, user) => {
     if (user) {
       var token = jwt.encode({
         user: user._id,
-        expire: Math.floor(Date.now() / 1000) + 30,
+        expire: Math.floor(Date.now() / 1000) + config.cookieLifetime,
       }, config.jwtSecret);
       res.send({
         token: token,
