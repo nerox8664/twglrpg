@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var HashMap = require('hashmap');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
@@ -16,14 +17,15 @@ var UserSchema = new Schema({
   }],
 });
 
-var cache = {};
-UserSchema.statics.findOneInCache = (query, cb) => {
-  var Model = mongoose.model('User');
-  if (cache[query]) {
-    return cb(null, cache[query]);
+var cache = new HashMap();
+UserSchema.statics.findOneInCache = function(query, cb) {
+  if (cache.has(query)) {
+    console.log('From cache:', cache.get(query));
+    return cb(null, cache.get(query));
   };
-  return Model.findOne(query, (err, user) => {
-    cache[query] = user;
+  return this.findOne(query, (err, user) => {
+    cache.set(query, user);
+    console.log('From db:', cache.get(query));
     cb(err,user);
   });
 }

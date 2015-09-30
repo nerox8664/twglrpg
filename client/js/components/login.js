@@ -15,15 +15,15 @@ app
               $scope.user = authService.user.get();
             });
 
-            $scope.login = function(email, password) {
+            $scope.login = (email, password) => {
               console.log('try to login', email, password);
               authService
                 .login(email, password)
             }
-            $scope.register = function(email, password) {
-              console.log('try to register', email, password);
+
+            $scope.logout = () => {
               authService
-                .register(email, password)
+                .logout();
             }
           }
         ]

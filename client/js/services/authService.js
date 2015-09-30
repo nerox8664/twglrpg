@@ -36,6 +36,12 @@ app
         })
     };
 
+    this.logout = () => {
+      this.token.set(null);
+      this.user.set(null);
+      $cookies.remove('token');
+    }
+
     this.register = (email, password) => {
       return $http
         .post('/auth/register', {

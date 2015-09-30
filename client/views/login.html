@@ -8,13 +8,12 @@
       <label>Password</label>
       <input ng-model="password" placeholder="example@domain.com" type="password">
     </div>
-    <div class="ui buttons">
-      <button class="ui blue button" type="submit" ng-click="login(email, password)">Login</button>
-      <div class="or"></div>
-      <button class="ui greeb button" type="submit" ng-click="register(email, password)">Register</button>
-    </div>
+    <button class="ui blue button" type="submit" ng-click="login(email, password)">Login</button>
+    <button class="ui greeb button" type="submit" ng-click="register(email, password)">Register</button>
+
   </form>
 </div>
 <div ng-if="user">
   Logged in as {{user.email}}
+  <button class="ui red button" type="submit" ng-click="logout()">Logout</button>
 </div>

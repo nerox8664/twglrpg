@@ -1,6 +1,6 @@
 {
   "name": "twglrpg",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Tiled webgl rpg",
   "main": "src/app.js",
   "scripts": {
@@ -25,6 +25,7 @@
     "gulp-minify-css": "^1.2.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.2.0",
+    "hashmap": "^2.0.3",
     "jwt-simple": "^0.3.1",
     "lodash": "^3.10.1",
     "main-bower-files": "^2.9.0",

@@ -47,6 +47,16 @@ app.use((req, res, next) => {
 app.use('/users', require(__base + 'routes/users.js'));
 app.use('/auth', require(__base + 'routes/auth.js'));
 
+app.get('/*', (req, res) => {
+  console.log(path.normalize(appRoot + 'public/index.html'));
+  res
+    .status(200)
+    .set({
+      'content-type': 'text/html; charset=utf-8'
+    })
+    .sendFile(path.normalize(appRoot + 'public/index.html'));
+});
+
 io.on('connection', (socket) => {
   debug('New connection');
   require(__base + 'events/game.js')(socket);

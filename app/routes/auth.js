@@ -13,6 +13,10 @@ router.get('/status', (req, res) => {
       token: token,
       user: req.user,
     });
+  } else {
+    res.status(403).send({
+      error: 'Auth failed',
+    });
   }
 });
 
@@ -48,7 +52,6 @@ router.post('/login', (req, res) => {
         token: token,
         user: user,
       });
-
     } else {
       res.status(403).send({
         error: 'Auth failed',
