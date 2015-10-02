@@ -10,9 +10,14 @@ var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
 var angularTemplates = require('gulp-angular-templates');
 
-gulp.task('setSemanticTheme', function() {
-  return gulp.src('./client/styles/theme.config')
-    .pipe(gulp.dest('./components/semantic/src'));
+gulp.task('overrideSemanticVariables', function() {
+  return gulp.src('./client/styles/semantic/**/*')
+    .pipe(gulp.dest('./components/semantic/src/'));
+});
+
+gulp.task('setSemanticTheme', ['overrideSemanticVariables'], function() {
+  return gulp.src('./client/styles/semantic/**/*')
+    .pipe(gulp.dest('./components/semantic/src/'));
 });
 
 gulp.task('less', ['setSemanticTheme'], function() {

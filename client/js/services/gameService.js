@@ -2,7 +2,7 @@ app
   .service('gameService', function($q, $http, $cookies, authService, socketService, Observable) {
     this.game = null;
 
-    this.setMap = (chunk) => {
+    this.setMap = function(chunk) {
       this.map = this.game.add.tilemap();
       this.map.addTilesetImage(chunk.image);
       this.layer = this.map.create(chunk.layerName, chunk.size[0], chunk.size[1], chunk.tileSize[0], chunk.tileSize[1]);
@@ -14,25 +14,17 @@ app
       }
     }
 
-    this.preload = () => {
+    this.preload = function() {
       this.game.load.image('tiles', '/assets/images/tileset.png');
       this.game.load.image('chars', '/assets/images/chars.png');
     }
 
-    this.create = () => {
+    this.create = function() {
       this.cursors = this.game.input.keyboard.createCursorKeys();
 
-      this.socket.on('game.character.create', function(data) {
-        this.character = this.game.add.tileSprite(0, 0, 32, 32, 'chars');
-        this.character.x = data.positionX;
-        this.character.y = data.positionY;
-        this.character.width = 32;
-        this.character.height = 32;
-        this.game.camera.follow(this.character);
-      });
     }
 
-    this.update = () => {
+    this.update = function() {
       if (this.cursors.left.isDown) {
         socketService.action('character.movement', {
           direction: 'left',
@@ -55,7 +47,7 @@ app
       }
     }
 
-    this.render = () => {
+    this.render = function() {
       this.game.debug.cameraInfo(this.game.camera, 50, 32);
     }
   });
