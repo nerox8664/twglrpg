@@ -4,6 +4,9 @@ app.config(($routeProvider, $locationProvider) => {
    .when('/register', {
       templateUrl: 'register.html',
     })
+    .when('/game', {
+       template: '<game></game>',
+     })
     .otherwise({
       templateUrl: 'main.html',
     });

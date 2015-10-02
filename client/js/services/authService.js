@@ -55,5 +55,7 @@ app
 
     $interval(() => {
       this.authStatus();
-    }, 5000);
+    }, 1000 * 60);
+
+    this.authStatus();
   })

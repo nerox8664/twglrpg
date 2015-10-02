@@ -11,21 +11,15 @@ app
             $scope.loaded = false;
             authService.token.addObserver(() => {
               if (!$scope.loaded) {
-                gameService.game = new Phaser.Game(
+                gameService.init(
                   $('#game-canvas').width(),
                   $('#game-canvas').height(),
-                  Phaser.AUTO,
-                  'game-canvas',
-                  {
-                    preload: _.bind(gameService.preload, gameService),
-                    create: _.bind(gameService.create, gameService),
-                    update: _.bind(gameService.update, gameService),
-                    render: _.bind(gameService.render, gameService),
-                  }
+                  'game-canvas'
                 );
                 $scope.loaded = true;
               }
             });
+            authService.authStatus();
           }
         ]
       }

@@ -7,9 +7,10 @@ module.exports = (socket) => {
         data.position = [0, 0];
       }
 
-      var c = Chunk.findOne({position: data.position}, (chunk) => {
+      var c = Chunk.findOne({position: data.position}, (err, chunk) => {
+        console.log(chunk);
         if (chunk) {
-          socket.emit('game.map.post', chunk);
+          socket.emit('map.post', chunk);
         } else {
           var tiles = new Array(64 * 64);
           for (var i = 0; i < 64 * 64; i++) {
@@ -23,7 +24,7 @@ module.exports = (socket) => {
             tileSize: [16, 16],
           });
           c.save((err, chunk) => {
-            socket.emit('game.map.post', chunk);
+            socket.emit('map.post', chunk);
           })
         }
       });
