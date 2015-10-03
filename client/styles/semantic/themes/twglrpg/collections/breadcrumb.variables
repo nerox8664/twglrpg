@@ -1,33 +1,11 @@
 /*******************************
-          Breadcrumb
+         Site Overrides
 *******************************/
 
-/*-------------------
-     Breadcrumb
---------------------*/
+@dividerOpacity: 1;
+@dividerSpacing: 0;
+@dividerSize: @big;
+@dividerColor: inherit;
 
-@verticalMargin: 0em;
-@display: inline-block;
-@verticalAlign: middle;
+@huge: 1.5384em;
 
-@dividerSpacing: @3px;
-@dividerOpacity: 0.7;
-@dividerColor: @lightTextColor;
-
-@dividerSize: @relativeSmall;
-@dividerVerticalAlign: baseline;
-
-@iconDividerSize: @relativeTiny;
-@iconDividerVerticalAlign: baseline;
-
-@sectionMargin: 0em;
-@sectionPadding: 0em;
-
-/* Coupling */
-@segmentPadding: @relativeMini @relativeMedium;
-
-/*-------------------
-       States
---------------------*/
-
-@activeFontWeight: bold;

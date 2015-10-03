@@ -5,24 +5,32 @@ app
 
     this.token.addObserver((token) => {
       $cookies.put('token', token);
-      console.log('get token:', token);
+      console.log('New token : ', token);
     });
 
-    this.checkLogin = (res) => {
-      if (!res.token) {
-        return $q.reject(res);
+    this.parseAuthData = (res) => {
+      if (res.token) {
+        this.token.set(res.token);
+        this.user.set(res.user);
       }
-      this.token.set(res.token);
-      this.user.set(res.user);
-      return res;
-    }
+    };
 
-    this.authStatus = () => {
-      return $http
+    this.checkLogin = () => {
+      var deferred = $q.defer();
+      $http
         .get('/auth/status', {})
         .success((res) => {
-          return this.checkLogin(res);
+          this.parseAuthData(res);
+          if (!res.token) {
+            return deferred.reject();
+          } else {
+            deferred.resolve();
+          }
         })
+        .error(() => {
+          deferred.reject();
+        })
+      return deferred.promise;
     }
 
     this.login = (email, password) => {
@@ -31,9 +39,7 @@ app
           email: email,
           password: password,
         })
-        .success((res) => {
-          return this.checkLogin(res);
-        })
+        .success(this.parseAuthData)
     };
 
     this.logout = () => {
@@ -48,14 +54,13 @@ app
           email: email,
           password: password,
         })
-        .success((res) => {
-          return this.checkLogin(res);
-        });
+        .success(this.parseAuthData);
     }
 
     $interval(() => {
-      this.authStatus();
+      this.checkLogin();
     }, 1000 * 60);
 
-    this.authStatus();
+    this.checkLogin();
   })
+111

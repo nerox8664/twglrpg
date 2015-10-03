@@ -1,139 +1,40 @@
 /*******************************
-            Segment
+            Standard
 *******************************/
 
 /*-------------------
-       Element
+       Segment
 --------------------*/
 
-@background: @white;
-@borderWidth: 1px;
-@border: @borderWidth solid @borderColor;
+@segmentBorderWidth: 1px;
+@border: 1px solid #D8DEE2;
+@boxShadow: 0px 1px 3px rgba(0, 0, 0, 0.075);
 
-@boxShadow: @subtleShadow;
-@verticalPadding: 1em;
-@horizontalPadding: 1em;
-@padding: @verticalPadding @horizontalPadding;
+@verticalPadding: 20px;
+@horizontalPadding: 20px;
 
-@verticalMargin: 1rem;
-@horizontalMargin: 0em;
-@margin: @verticalMargin @horizontalMargin;
-@borderRadius: @defaultBorderRadius;
-
-/*-------------------
-       Group
---------------------*/
-
-@groupedMargin: @margin;
-@groupedBorder: @border;
-@groupedBoxShadow: @boxShadow;
-@groupedBorderRadius: @borderRadius;
-
-@nestedGroupMargin: @verticalMargin @verticalMargin;
-
-@groupedSegmentBorder: none;
-@groupedSegmentDivider: @border;
-@groupedSegmentMargin: 0em;
-@groupedSegmentWidth: auto;
-@groupedSegmentBoxShadow: none;
-
-/*-------------------
-       Coupling
---------------------*/
-
-/* Page Grid Segment */
-@pageGridMargin: (2 * @verticalPadding);
-
-/*******************************
-            States
-*******************************/
-
-/* Loading Dimmer */
-@loaderDimmerColor: rgba(255, 255, 255, 0.8);
-@loaderDimmerZIndex: 100;
-
-/* Loading Spinner */
-@loaderSize: 3em;
-@loaderLineZIndex: 101;
-
+@borderRadius: 4px;
 
 /*******************************
             Variations
 *******************************/
 
-/* Piled */
-@piledZIndex: auto;
-@piledMargin: 3em;
-@piledBoxShadow: '';
-@piledDegrees: 1.2deg;
-@piledBorder: @border;
-
-/* Circular */
-@circularPadding: 2em;
-
-/* Stacked */
-@stackedHeight: 6px;
-@stackedPageBackground: @subtleTransparentBlack;
-@stackedPadding: @verticalPadding + (0.4em);
-@tallStackedPadding: @verticalPadding + (0.8em);
 
 /* Raised */
-@raisedBoxShadow: @floatingShadow;
-
-/* Padded */
-@paddedSegmentPadding: 1.5em;
-@veryPaddedSegmentPadding: 3em;
-
-/* Attached */
-@attachedTopOffset: 0px;
-@attachedBottomOffset: 0px;
-@attachedHorizontalOffset: -@borderWidth;
-@attachedWidth: ~"calc(100% + "-@attachedHorizontalOffset * 2~")";
-@attachedBoxShadow: none;
-@attachedBorder: @borderWidth solid @solidBorderColor;
-@attachedBottomBoxShadow:
-  @boxShadow,
-  @attachedBoxShadow
-;
-
-/* Inverted */
-@invertedBackground: @black;
-
-/* Floated */
-@floatedDistance: 1em;
-
-/* Basic */
-@basicBackground: none transparent;
-@basicBorder: none;
-@basicBoxShadow: none;
-@basicBorderRadius: 0px;
+@raisedBoxShadow: 0px 1px 3px rgba(0, 0, 0, 0.075);
 
 /* Colors */
-@coloredBorderSize: 2px;
+@coloredBorderSize: 0.5em;
 
 /* Ordinality */
-@secondaryBackground: @darkWhite;
-@secondaryColor: @mutedTextColor;
+@secondaryBackground: #F9F9F9;
+@secondaryColor: @textColor;
 
-@tertiaryBackground:  @midWhite;
-@tertiaryColor: @mutedTextColor;
+@tertiaryBackground:  #F0F0F0;
+@tertiaryColor: @textColor;
 
-@secondaryInvertedLightness: 0.2;
-@secondaryInvertedBackground:
-  lighten(@black, (@secondaryInvertedLightness * 100))
-  linear-gradient(
-    rgba(255, 255, 255, @secondaryInvertedLightness) 0%,
-    rgba(255, 255, 255, @secondaryInvertedLightness) 100%
-  )
-;
-@secondaryInvertedColor: @invertedMutedTextColor;
+@secondaryInvertedBackground: #555555;
+@secondaryInvertedColor: @textColor;
 
-@tertiaryInvertedLightness: 0.35;
-@tertiaryInvertedBackground:
-  lighten(@black, (@tertiaryInvertedLightness * 100))
-  linear-gradient(
-    rgba(255, 255, 255, @tertiaryInvertedLightness) 0%,
-    rgba(255, 255, 255, @tertiaryInvertedLightness) 100%
-  )
-;
-@tertiaryInvertedColor: @invertedMutedTextColor;
+@tertiaryInvertedBackground: #333333;
+@tertiaryInvertedColor: @textColor;

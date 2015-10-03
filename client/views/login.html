@@ -1,4 +1,4 @@
-<div ng-if="!user">
+<div ng-if="!user" ng-hide="currentPath.path() == '/register'">
   <form class="ui form">
     <div class="field">
       <label>Username</label>
@@ -9,7 +9,7 @@
       <input ng-model="password" placeholder="example@domain.com" type="password">
     </div>
     <button class="ui blue button" type="submit" ng-click="login(email, password)">Login</button>
-    <button class="ui greeb button" type="submit" ng-click="register(email, password)">Register</button>
+    <a class="ui green button" type="submit" href="/register">Register</a>
 
   </form>
 </div>

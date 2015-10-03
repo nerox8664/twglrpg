@@ -1,12 +1,11 @@
 <form class="ui form inverted" ng-controller="registerForm">
   <div class="field">
     <label>Email</label>
-    <input ng-model="email" placeholder="Email" type="email">
+    <input ng-model="email" placeholder="example@domain.com" type="email">
   </div>
   <div class="field">
     <label>Password</label>
-    <input ng-model="password"  placeholder="****" type="password">
+    <input ng-model="password" type="password">
   </div>
   <button class="ui green button" type="submit" ng-click="register(email, password)">Register</button>
-
 </form>
