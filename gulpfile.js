@@ -9,6 +9,13 @@ var gls = require('gulp-live-server');
 var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
 var angularTemplates = require('gulp-angular-templates');
+var markdown = require('gulp-markdown');
+
+gulp.task('markdown', function() {
+  return gulp.src('./client/views/md/**/*.md')
+      .pipe(markdown())
+      .pipe(gulp.dest('./client/views/'));
+});
 
 gulp.task('overrideSemanticVariables', function() {
   return gulp.src('./client/styles/semantic/**/*')
@@ -49,7 +56,7 @@ gulp.task('serverjs', ['stylecheck'], function() {
     .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('angular-templates', function() {
+gulp.task('angular-templates', ['markdown'], function() {
   return gulp
     .src('./client/views/**/*.html')
     .pipe(angularTemplates({
@@ -80,7 +87,7 @@ gulp.task('serve', ['clientjs', 'serverjs'], function() {
 gulp.task('dev', ['serve'], function() {
   gulp.watch('app/**/*.js', ['serverjs']);
 
-  gulp.watch('client/views/**/*.html', ['angular-templates']);
+  gulp.watch('client/views/**/*', ['angular-templates']);
   gulp.watch('client/styles/*.less', ['less']);
   gulp.watch('client/js/**/*.js', ['clientjs']);
   gulp.watch('client/index.html', ['index']);

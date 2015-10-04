@@ -1,19 +1,22 @@
 <div ng-if="!user" ng-hide="currentPath.path() == '/register'">
   <form class="ui form">
-    <div class="field">
+    <div class="ui field">
       <label>Username</label>
-      <input ng-model="email" placeholder="Username" type="text">
+      <div class="ui inverted icon input">
+        <input ng-model="email" placeholder="Username" type="text">
+      </div>
     </div>
-    <div class="field">
+    <div class="ui field">
       <label>Password</label>
       <input ng-model="password" placeholder="example@domain.com" type="password">
     </div>
-    <button class="ui blue button" type="submit" ng-click="login(email, password)">Login</button>
-    <a class="ui green button" type="submit" href="/register">Register</a>
-
+    <div class="ui center aligned">
+      <button class="ui blue button" type="submit" ng-click="login(email, password)">Войти</button>
+      <a class="ui green button" type="submit" href="/register">Зарегистрироваться</a>
+    </div>
   </form>
 </div>
 <div ng-if="user">
-  Logged in as {{user.email}}
-  <button class="ui red button" type="submit" ng-click="logout()">Logout</button>
+  Произведен вход {{user.email}}
+  <button class="ui small red button" type="submit" ng-click="logout()">Выйти</button>
 </div>
