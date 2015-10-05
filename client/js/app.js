@@ -7,8 +7,11 @@ app.config(($routeProvider, $locationProvider) => {
     .when('/profile', {
        templateUrl: 'profile.html',
      })
+     .when('/login', {
+        templateUrl: 'login.html',
+      })
     .when('/game', {
-       template: '<game></game>',
+       template: '<div id="game-canvas" class="ui inverted segment"></div><game></game>',
      })
     .otherwise({
       templateUrl: 'main.html',
@@ -17,13 +20,17 @@ app.config(($routeProvider, $locationProvider) => {
 });
 
 app.run(['$rootScope', '$location', 'authService', ($rootScope, $location, authService) => {
-  $rootScope.$on('$routeChangeStart', (event) => {
+  $rootScope.$on('$routeChangeStart', (event, next, current) => {
+    console.log($location.path());
+    if ($location.path() == '/register') {
+      console.log('ALLOW');
+      return;
+    }
     authService
       .checkLogin()
       .then(
         () => {
           console.log('ALLOW');
-          $location.path('/profile');
         },
         () => {
           console.log('DENY');

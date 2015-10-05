@@ -62,7 +62,7 @@ app
       }
     }
 
-    this.render = function() {
+    this.render = () => {
       this.game.debug.cameraInfo(this.game.camera, 50, 32);
     }
   });

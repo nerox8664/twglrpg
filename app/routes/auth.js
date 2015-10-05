@@ -5,7 +5,7 @@ var _ = require('lodash');
 
 var router = express.Router();
 
-router.get('/status', (req, res) => {
+router.get('/renew', (req, res) => {
   if (req.user) {
     req.token.expire = Math.floor(Date.now() / 1000) + config.cookieLifetime;
     var token = jwt.encode(req.token, config.jwtSecret);
@@ -14,9 +14,11 @@ router.get('/status', (req, res) => {
       user: req.user,
     });
   } else {
-    res.status(403).send({
-      error: 'Auth failed',
-    });
+    res
+      .status(403)
+      .send({
+        error: 'Auth failed',
+      });
   }
 });
 
@@ -53,9 +55,11 @@ router.post('/login', (req, res) => {
         user: user,
       });
     } else {
-      res.status(403).send({
-        error: 'Auth failed',
-      });
+      res
+        .status(403)
+        .send({
+          error: 'Auth failed',
+        });
     }
   })
 });

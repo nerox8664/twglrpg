@@ -15,6 +15,7 @@
     "cookie-parser": "^1.4.0",
     "debug": "^2.2.0",
     "express": "^4.13.3",
+    "glob": "^5.0.15",
     "gulp": "^3.9.0",
     "gulp-angular-templates": "0.0.2",
     "gulp-babel": "^5.2.1",

@@ -1,28 +1,22 @@
 var express = require('express');
-var User = require(__base + 'models/user.js');
+var Character = require(__base + 'models/character.js');
 
 var router = express.Router();
 
-router.post('/login', (req, res) => {
-  User.findOneInCache({
-    email: req.body.email,
-    password: req.body.password,
-  }, (err, user) => {
-    if (user) {
-      var token = jwt.encode({
-        user: user._id,
-        expire: Math.floor(Date.now() / 1000) + config.cookieLifetime,
-      }, config.jwtSecret);
-      res.send({
-        token: token,
-        user: user,
-      });
-    } else {
-      res.status(403).send({
-        error: 'Auth failed',
-      });
-    }
-  })
+router.get('/', (req, res) => {
+  res.send('List of chars');
+});
+
+router.post('/', (req, res) => {
+  var char = new Character({
+    name: req.body.name,
+    currentChunk: [0, 0],
+    positionX: 0,
+    positionY: 0,
+  });
+  char.save((err, char) => {
+    res.send(char);
+  });
 });
 
 module.exports = router;

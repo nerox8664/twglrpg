@@ -12,11 +12,19 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
+// Global path configuration
 global.appRoot = __dirname + '/../'
 global.__base = __dirname + '/';
 global.config = require(__dirname + '/config.js');
 
+// Connect to MongoDB
 mongoose.connect(global.config.mongoConnectionString);
+mongoose.connection.on('error', () => {
+  debug('Connection error');
+});
+mongoose.connection.once('open', (callback) => {
+  debug('Mongoose connected');
+});
 
 // Attach express middleware
 app.use(cookieParser());
@@ -25,12 +33,14 @@ app.use(require('compression')());
 app.use(require('morgan')('dev'));
 
 // Auth service
-app.use(require(__base + 'lib/auth.js'));
+var auth = require(__base + 'lib/auth.js');
+app.use(auth.checkUser);
 
 // Static routes
 app.use('/', express.static(appRoot + 'public'));
 app.use('/bower_components', express.static(appRoot + 'bower_components'));
 app.use('/assets', express.static(appRoot + 'assets'));
+app.use('/themes', express.static(appRoot + 'components/semantic/src/themes'));
 
 // Allow cross-domain requests
 app.use((req, res, next) => {
@@ -46,6 +56,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/users', require(__base + 'routes/users.js'));
 app.use('/auth', require(__base + 'routes/auth.js'));
+app.use('/characters', auth.onlyUsers, require(__base + 'routes/character.js'));
 
 app.get('/*', (req, res) => {
   console.log(path.normalize(appRoot + 'public/index.html'));

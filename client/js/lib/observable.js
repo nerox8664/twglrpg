@@ -3,7 +3,7 @@ angular.module('twglrpg')
     function Observable(value) {
       this.value = value;
       this.observers = [];
-    }
+    };
 
     Observable.prototype.get = function() {
       return this.value;

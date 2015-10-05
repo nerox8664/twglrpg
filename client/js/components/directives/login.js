@@ -5,7 +5,7 @@ app
         restrict: 'E',
         scope: {},
         transclude: true,
-        templateUrl: 'login.html',
+        templateUrl: 'directives/login.html',
         controller: ['$scope', '$http', '$window',
           function($scope, $http, $window) {
             $scope.loginError = false;

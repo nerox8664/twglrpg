@@ -3,6 +3,10 @@ app
     this.socket = io('http://localhost:8089');
     this.action = function(action, data) {
       data.token = authService.token.get();
-      this.socket.emit(action, data);
+      if (data.token) {
+        this.socket.emit(action, data);
+      } else {
+        console.log('Action called, but token undefined');
+      }
     };
   })

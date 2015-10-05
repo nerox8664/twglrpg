@@ -17,19 +17,23 @@ app
 
     this.checkLogin = () => {
       var deferred = $q.defer();
-      $http
-        .get('/auth/status', {})
-        .success((res) => {
-          this.parseAuthData(res);
-          if (!res.token) {
-            return deferred.reject();
-          } else {
-            deferred.resolve();
-          }
-        })
-        .error(() => {
-          deferred.reject();
-        })
+      if (this.token.get()) {
+        deferred.resolve();
+      } else {
+        $http
+          .get('/auth/renew', {})
+          .success((res) => {
+            this.parseAuthData(res);
+            if (!res.token) {
+              deferred.reject();
+            } else {
+              deferred.resolve();
+            }
+          })
+          .error(() => {
+            deferred.reject();
+          })
+      }
       return deferred.promise;
     }
 

@@ -19,7 +19,6 @@ app
                 $scope.loaded = true;
               }
             });
-            authService.authStatus();
           }
         ]
       }
