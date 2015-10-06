@@ -24,10 +24,22 @@
 </div>
 
 <div ng-if="user">
-  <div class="field">
-    Произведен вход {{user.email}}
-  </div>
-  <div class="field">
-    <button class="ui small red button" type="submit" ng-click="logout()">Выйти</button>
+  <div class="ui stackable segment inverted">
+    <div class="ui stacked segment inverted">
+      <div class="field">
+        Произведен вход {{user.email}}
+      </div>
+    </div>
+    <div class="ui stacked segment inverted">
+      <div class="ui inverted link list">
+        <a class="item" href="/profile">Профиль</a>
+        <a class="item" href="/characters">Персонажи</a>
+        <a class="item">Link Three</a>
+        <a class="item">Link Four</a>
+      </div>
+    </div>
+    <div class="ui stacked segment inverted">
+        <button class="ui small fluid red button" type="submit" ng-click="logout()">Выйти</button>
+    </div>
   </div>
 </div>

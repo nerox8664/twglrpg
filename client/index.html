@@ -19,16 +19,16 @@
   </head>
   <body>
 
-    <header class="ui inverted center aligned segment">
-      <h2 class="ui header">Codename: TWGLRPG</h2>
+    <header class="ui inverted center aligned segment list">
+      <h2 class="ui header"><a class="ui header inverted" href="/"> Codename: TWGLRPG</a></h2>
     </header>
 
-    <div class="ui centered grid">
+    <div class="ui inverted centered grid segment">
       <div class="ui two column row centered">
         <div class="ui three wide column">
           <login-form></login-form>
         </div>
-        <div class="ui nine wide column" ng-view>
+        <div class="ui nine wide column inverted" ng-view>
         </div>
         <div class="ui three wide column">
           test
@@ -36,8 +36,8 @@
       </div>
     </div>
 
-    <footer class="ui center aligned segment inverted">
+    <div class="ui footer segment inverted vertical center aligned">
       &copy; 2015 nerox8664
-    </footer>
+    </div>
   </body>
 </html>

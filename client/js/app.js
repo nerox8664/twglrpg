@@ -13,8 +13,11 @@ app.config(($routeProvider, $locationProvider) => {
     .when('/game', {
        template: '<div id="game-canvas" class="ui inverted segment"></div><game></game>',
      })
+     .when('/', {
+        templateUrl: 'main.html',
+      })
     .otherwise({
-      templateUrl: 'main.html',
+      templateUrl: '404.html',
     });
   $locationProvider.html5Mode(true);
 });

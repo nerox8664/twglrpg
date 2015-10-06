@@ -1,10 +1,13 @@
 var express = require('express');
 var Character = require(__base + 'models/character.js');
+var User = require(__base + 'models/user.js');
 
 var router = express.Router();
 
 router.get('/', (req, res) => {
-  res.send('List of chars');
+  User.findOne(req.user).populate('characters').exec((err, user) => {
+    res.send(req.user.characters);
+  })
 });
 
 router.post('/', (req, res) => {
@@ -15,7 +18,10 @@ router.post('/', (req, res) => {
     positionY: 0,
   });
   char.save((err, char) => {
-    res.send(char);
+    req.user.characters.unshift(char);
+    req.user.save((err, user) => {
+      res.send(char);
+    });
   });
 });
 

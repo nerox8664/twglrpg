@@ -17,6 +17,9 @@ var UserSchema = new Schema({
   }],
 });
 
+// TODO: improve cache as plugin.
+// UserSchema.plugin(test());
+
 var cache = new HashMap();
 UserSchema.statics.findOneInCache = function(query, cb) {
   if (cache.has(query)) {
