@@ -54,9 +54,9 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/users', require(__base + 'routes/users.js'));
-app.use('/auth', require(__base + 'routes/auth.js'));
-app.use('/characters', auth.onlyUsers, require(__base + 'routes/character.js'));
+app.use('/api/users', require(__base + 'routes/users.js'));
+app.use('/api/auth', require(__base + 'routes/auth.js'));
+app.use('/api/characters', auth.onlyUsers, require(__base + 'routes/character.js'));
 
 app.get('/*', (req, res) => {
   console.log(path.normalize(appRoot + 'public/index.html'));

@@ -8,17 +8,11 @@ app
         templateUrl: 'game.html',
         controller: ['$scope', '$http', '$window',
           function($scope, $http, $window) {
-            $scope.loaded = false;
-            authService.token.addObserver(() => {
-              if (!$scope.loaded) {
-                gameService.init(
-                  $('#game-canvas').width(),
-                  $('#game-canvas').height(),
-                  'game-canvas'
-                );
-                $scope.loaded = true;
-              }
-            });
+            gameService.init(
+              $('#game-canvas').width(),
+              $('#game-canvas').height(),
+              'game-canvas'
+            );
           }
         ]
       }

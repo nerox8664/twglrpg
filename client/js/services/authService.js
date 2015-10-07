@@ -21,7 +21,7 @@ app
         deferred.resolve();
       } else {
         $http
-          .get('/auth/renew', {})
+          .get('/api/auth/renew', {})
           .success((res) => {
             this.parseAuthData(res);
             if (!res.token) {
@@ -39,7 +39,7 @@ app
 
     this.login = (email, password) => {
       return $http
-        .post('/auth/login', {
+        .post('/api/auth/login', {
           email: email,
           password: password,
         })
@@ -54,7 +54,7 @@ app
 
     this.register = (email, password) => {
       return $http
-        .post('/auth/register', {
+        .post('/api/auth/register', {
           email: email,
           password: password,
         })
