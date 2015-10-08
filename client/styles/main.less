@@ -2,6 +2,31 @@
 //endbower
 @import "components/semantic/src/semantic.less";
 
+@font-face {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('PT Sans'), local('PTSans-Regular'), url(/fTLR1wW5qq9Ui3F-pB4hXQ.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('PT Sans Bold'), local('PTSans-Bold'), url(/g46X4VH_KHOWAAa-HpnGPvk_vArhqVIZ0nv9q090hN8.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'PT Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: local('PT Sans Italic'), local('PTSans-Italic'), url(/7dSh6BcuqDLzS2qAASIeultXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'PT Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: local('PT Sans Bold Italic'), local('PTSans-BoldItalic'), url(/lILlYDvubYemzYzN7GbLkOXREeHhJi4GEUJI9ob_ak4.woff2) format('woff2');
+}
+
 html, body {
   overflow-x: hidden;
   width: 100%;
@@ -18,4 +43,9 @@ html, body {
 #game-canvas {
   width: 100%;
   height: 500px;
+}
+
+.content {
+  font-size: 12pt;
+  font-family: 'PT Sans';
 }

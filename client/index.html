@@ -17,15 +17,17 @@
     <script src="javascripts/main.js"></script>
     <script src="javascripts/templates.js"></script>
   </head>
-  <body ng-controller="MainController">
+  <body>
 
     <header class="ui inverted center aligned segment">
-      <h2 class="ui header"><a class="ui header inverted" href="/"> Codename: TWGLRPG</a></h2>
+      <h2 class="ui header">
+        <a class="ui header inverted" href="/"> Codename: TWGLRPG</a>
+      </h2>
     </header>
 
-    <ng-include src="layout"></ng-include>
+    <div ui-view class="ui inverted centered grid"></div>
 
-    <div class="ui footer segment inverted vertical center aligned">
+    <div class="ui footer segment inverted center aligned">
       &copy; 2015 nerox8664
     </div>
 

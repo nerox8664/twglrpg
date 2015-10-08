@@ -2,7 +2,7 @@ app
   .controller('loginForm',
     function($location, $scope, authService) {
       $scope.loginError = false;
-      $scope.user = false;
+      $scope.user = authService.user.get();
       $scope.currentPath = $location;
 
       authService.user.addObserver(() => {

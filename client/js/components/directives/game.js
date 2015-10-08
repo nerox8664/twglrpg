@@ -5,7 +5,7 @@ app
         restrict: 'E',
         scope: {},
         transclude: true,
-        templateUrl: 'game.html',
+        templateUrl: 'directives/game.html',
         controller: ['$scope', '$http', '$window',
           function($scope, $http, $window) {
             gameService.init(

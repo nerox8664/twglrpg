@@ -9,7 +9,7 @@ app
         controller: ['$scope', '$http', '$window',
           function($scope, $http, $window) {
             $scope.loginError = false;
-            $scope.user = false;
+            $scope.user = authService.user.get();
             $scope.currentPath = $location;
 
             authService.user.addObserver(() => {

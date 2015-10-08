@@ -2,20 +2,14 @@
      User Global Variables
 *******************************/
 
-@pageMinWidth  : 1049px;
+@pageMinWidth  : 640px;
 @pageOverflowX : visible;
 
-@emSize: 14px;
+@emSize: 16px;
 @fontSize : 14px;
-@font-face {
-  font-family: 'Cuprum';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Cuprum'), local('Cuprum-Regular'), url(/cuprum.woff2) format('woff2');
-}
 
 
-@fontName          : 'Cuprum';
+@fontName          : 'PT Sans';
 @fontSmoothing     : antialiased;
 
 @headerFont        : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;

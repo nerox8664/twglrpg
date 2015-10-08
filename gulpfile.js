@@ -9,11 +9,17 @@ var gls = require('gulp-live-server');
 var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
 var angularTemplates = require('gulp-angular-templates');
-var markdown = require('gulp-markdown');
+var gulpMarked = require('gulp-marked');
+var marked = require('marked');
+var renderer = new marked.Renderer();
+
+renderer.blockquote = function(quote) {
+  return '<blockquote class="ui testimonial">\n' + quote + '</blockquote>\n';
+};
 
 gulp.task('markdown', function() {
   return gulp.src('./client/views/md/**/*.md')
-      .pipe(markdown())
+      .pipe(gulpMarked({ renderer: renderer }))
       .pipe(gulp.dest('./client/views/'));
 });
 
