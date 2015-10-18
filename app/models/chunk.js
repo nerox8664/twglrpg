@@ -9,4 +9,6 @@ var ChunkSchema = Schema({
   tileSize: [Number],
 });
 
+ChunkSchema.plugin(require(__base + 'lib/mongoCache.js'));
+
 module.exports = mongoose.model('Chunk', ChunkSchema, 'chunks');

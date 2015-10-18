@@ -82,7 +82,7 @@ gulp.task('index', function() {
 var server;
 
 gulp.task('serve', ['clientjs', 'serverjs'], function() {
-  server = gls('./build/app.js', {
+  server = gls('./app/app.js', {
     env: {
       NODE_ENV: 'development',
     },

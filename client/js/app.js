@@ -79,7 +79,6 @@ app.run([
     $rootScope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams) {
         if (_.findIndex(['/', '/register', '/login'], function(loc) {
-          console.log($location.path(), loc);
           return $location.path() === loc;
         }) >= 0) {
           console.log('ALLOW default');

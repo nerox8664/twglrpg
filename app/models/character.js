@@ -21,4 +21,6 @@ var CharacterSchema = Schema({
   },
 });
 
+CharacterSchema.plugin(require(__base + 'lib/mongoCache.js'));
+
 module.exports = mongoose.model('Character', CharacterSchema, 'characters');

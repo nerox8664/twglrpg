@@ -1,16 +1,16 @@
-// TODO: Rewrite lib as mongoose plugin.
+var HashMap = require('hashmap');
 
-module.exports = (Schema) => {
+module.exports = function(schema, options) {
   var cache = new HashMap();
-  Schema.statics.findOneInCache = function(query, cb) {
-    if (cache.has(query)) {
-      console.log('From cache:', cache.get(query));
-      return cb(null, cache.get(query));
+  schema.statics.findOneInCache = function(conditions, callback) {
+    if (cache.has(conditions)) {
+      console.log('From cache:', cache.get(conditions));
+      return callback(null, cache.get(conditions));
     };
-    return this.findOne(query, (err, answer) => {
-      cache.set(query, answer);
-      console.log('From db:', cache.get(query));
-      cb(err, answer);
+    return this.findOne(conditions, (err, answer) => {
+      cache.set(conditions, answer);
+      console.log('From db:', cache.get(conditions));
+      callback(err, answer);
     });
-  }
+  };
 }
