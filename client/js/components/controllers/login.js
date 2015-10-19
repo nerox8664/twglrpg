@@ -17,7 +17,7 @@ app
           })
           .error(function() {
             $scope.loginError = true;
-          })
+          });
       }
 
       $scope.logout = function() {

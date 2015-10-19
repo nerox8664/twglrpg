@@ -31,6 +31,14 @@ app.config(function($locationProvider, $stateProvider, $urlRouterProvider) {
         },
       }
     })
+    .state('1column.register', {
+      url: '/register',
+      views: {
+        'content': {
+          templateUrl: 'register.html',
+        },
+      }
+    })
     .state('2column.login', {
       url: '/profile',
       views: {
@@ -78,12 +86,6 @@ app.run([
 
     $rootScope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams) {
-        if (_.findIndex(['/', '/register', '/login'], function(loc) {
-          return $location.path() === loc;
-        }) >= 0) {
-          console.log('ALLOW default');
-          return;
-        }
         authService
           .checkLogin()
           .then(
@@ -91,9 +93,18 @@ app.run([
               console.log('ALLOW');
             },
             () => {
-              console.log('DENY');
-              event.preventDefault();
-              $location.path('/login');
+              var allowedRoutes = ['/', '/register', '/login',];
+              var current = $location.path();
+
+              if (allowedRoutes.indexOf(current) >= 0) {
+                console.log('ALLOW default' + current);
+                return;
+              } else {
+                console.log('DENY' + current);
+                event.preventDefault();
+                $location.path('/login');
+                return;
+              }
             }
           );
       }

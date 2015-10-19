@@ -35,5 +35,7 @@ module.exports = (position) => {
   var positionDown = [position[0], position[1] - 1];
 
   Console.log('Chunk generation called');
-  var chunkUp = Chunk.findOneInCache({position: positionUp})
+  var chunkUp = Chunk.findOneInCache({position: positionUp});
+  var chunk = new Chunk({});
+  return chunk;
 }

@@ -52,11 +52,12 @@ app
       $cookies.remove('token');
     }
 
-    this.register = (email, password) => {
+    this.register = (email, password, nickname) => {
       return $http
         .post('/api/auth/register', {
           email: email,
           password: password,
+          nickname: nickname,
         })
         .success(this.parseAuthData);
     }

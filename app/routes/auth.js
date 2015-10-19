@@ -26,14 +26,25 @@ router.post('/register', (req, res) => {
   var user = new User({
     email: req.body.email,
     password: req.body.password,
+    nickname: req.body.nickname,
   });
 
   user.save((err, user) => {
+    console.log(err, user);
+    if (err) {
+      return res
+        .status(403)
+        .send({
+          error: 'Register failed',
+        });
+    }
+
     var token = jwt.encode({
       user: user._id,
       expire: Math.floor(Date.now() / 1000) + config.cookieLifetime,
     }, config.jwtSecret);
-    res.send({
+
+    return res.send({
       token: token,
       user: user,
     });

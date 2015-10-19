@@ -1,11 +1,15 @@
 <form class="ui form inverted" ng-controller="registerForm">
-  <div class="field">
+  <div class="field" ng-class="{'error': loginError}">
     <label>Email</label>
     <input ng-model="email" placeholder="example@domain.com" type="email">
   </div>
-  <div class="field">
+  <div class="field" ng-class="{'error': loginError}">
     <label>Password</label>
     <input ng-model="password" type="password">
   </div>
-  <button class="ui green button" type="submit" ng-click="register(email, password)">Register</button>
+  <div class="field" ng-class="{'error': loginError}">
+    <label>Nickname</label>
+    <input ng-model="nickname" placeholder="superman" type="text">
+  </div>
+  <input class="ui green button" type="submit" ng-click="register(email, password, nickname)" value="Register">
 </form>

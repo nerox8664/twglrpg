@@ -1,6 +1,9 @@
+global.__base = __dirname + '/';
+
 var Chunk = require(__dirname + '/models/chunk.js');
 var glob = require('glob');
 var mongoose = require('mongoose');
+
 
 mongoose.connect('mongodb://localhost/rpg');
 
@@ -18,8 +21,6 @@ glob('assets/map/*.json', function(er, files) {
         tiles: tiles,
         position: position,
         image: 'tiles',
-        size: [chunk.width, chunk.height],
-        tileSize: [chunk.tilewidth, chunk.tileheight],
       });
       c.save(function(err, chunk) {
         console.log(file, 'done');

@@ -11,4 +11,10 @@ module.exports = function(schema, options) {
       callback(err, answer);
     });
   };
+  schema.post('save', function(doc) {
+    var key = cache.search(doc);
+    if (key) {
+      cache.remove(key);
+    }
+  });
 }

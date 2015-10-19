@@ -5,8 +5,10 @@ var ChunkSchema = Schema({
   image: String,
   tiles: [Number],
   position: [Number],
-  size: [Number],
-  tileSize: [Number],
+  objects: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Object',
+  }],
 });
 
 ChunkSchema.plugin(require(__base + 'lib/mongoCache.js'));

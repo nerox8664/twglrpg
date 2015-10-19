@@ -1,7 +1,16 @@
 app
   .controller('registerForm',
-    function($scope, authService) {
-      $scope.register = (email, password) => {
-        authService.register(email, password);
+    function($location, $scope, authService) {
+      $scope.registerError = false;
+
+      $scope.register = (email, password, nickname) => {
+        authService
+          .register(email, password, nickname)
+          .success(function() {
+            $location.path('/profile');
+          })
+          .error(function() {
+            $scope.loginError = true;
+          });
       }
     })
