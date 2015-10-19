@@ -10,12 +10,14 @@ app
       });
 
       $scope.login = function(email, password) {
-        console.log('try to login', email, password);
         authService
           .login(email, password)
-          .then(function() {
+          .success(function() {
             $location.path('/profile');
-          });
+          })
+          .error(function() {
+            $scope.loginError = true;
+          })
       }
 
       $scope.logout = function() {

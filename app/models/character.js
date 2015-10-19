@@ -8,7 +8,8 @@ var CharacterSchema = Schema({
     unique: true,
   },
   currentChunk: {
-    type: [Number],
+    type: Schema.Types.ObjectId,
+    ref: 'Chunk',
     required: true,
   },
   positionX: {

@@ -17,7 +17,7 @@ router.get('/renew', (req, res) => {
     res
       .status(403)
       .send({
-        error: 'Auth failed',
+        error: 'Auth failed or token expired',
       });
   }
 });

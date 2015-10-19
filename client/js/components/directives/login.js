@@ -6,8 +6,8 @@ app
         scope: {},
         transclude: true,
         templateUrl: 'directives/login.html',
-        controller: ['$scope', '$http', '$window',
-          function($scope, $http, $window) {
+        controller: ['$scope', '$http', '$window', '$state',
+          function($scope, $http, $window, $state) {
             $scope.loginError = false;
             $scope.user = authService.user.get();
             $scope.currentPath = $location;
@@ -17,7 +17,6 @@ app
             });
 
             $scope.login = function(email, password) {
-              console.log('try to login', email, password);
               authService
                 .login(email, password)
                 .then(function() {
@@ -28,6 +27,7 @@ app
             $scope.logout = function() {
               authService
                 .logout();
+              $state.reload();
             }
           }
         ]

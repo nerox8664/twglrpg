@@ -18,7 +18,7 @@ global.__base = __dirname + '/';
 global.config = require(__dirname + '/config.js');
 
 // Connect to MongoDB
-mongoose.connect(global.config.mongoConnectionString);
+mongoose.connect(config.mongoConnectionString);
 mongoose.connection.on('error', () => {
   debug('Connection error');
 });
@@ -59,7 +59,6 @@ app.use('/api/auth', require(__base + 'routes/auth.js'));
 app.use('/api/characters', auth.onlyUsers, require(__base + 'routes/character.js'));
 
 app.get('/*', (req, res) => {
-  console.log(path.normalize(appRoot + 'public/index.html'));
   res
     .status(200)
     .set({
