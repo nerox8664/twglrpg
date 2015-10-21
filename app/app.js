@@ -67,9 +67,11 @@ app.get('/*', (req, res) => {
     .sendFile(path.normalize(appRoot + 'public/index.html'));
 });
 
+var gameService = require(__base + 'services/game.js')();
+
 io.on('connection', (socket) => {
   debug('New connection');
-  require(__base + 'events/game.js')(socket);
+  require(__base + 'events/client.js')(socket, gameService);
 });
 
 server.listen(8089, () => {

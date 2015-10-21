@@ -7,4 +7,6 @@ module.exports = {
   jwtSecret: 'jwtSecret',
   cookieLifetime: 5 * 60 * 60,
   spawn: [16, 15],
+  chunkSize: 32,
+  tileSize: 32,
 }

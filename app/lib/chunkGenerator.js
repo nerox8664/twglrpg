@@ -30,12 +30,24 @@ function getBezierCurve(arr, step) {
   return res;
 }
 
-module.exports = (position) => {
-  var positionUp = [position[0], position[1] + 1];
-  var positionDown = [position[0], position[1] - 1];
-
-  Console.log('Chunk generation called');
-  var chunkUp = Chunk.findOneInCache({position: positionUp});
-  var chunk = new Chunk({});
+module.exports = (x, y) => {
+  // тут получить соседние чанки и посмотреть их границы, если там есть дороги, соединить их
+  // если дорог нет, можно выбрать любые внутренние точки.
+  // если какого-то из соседних чанков еще нет (не сгенерирован), к его грани можно подвести дорогу
+  console.log('Chunk generation called');
+  var landscapeTiles = [0, 173, 324, 442];
+  var tiles = [];
+  for (var i = 0; i < config.chunkSize; i++) {
+    for (var j = 0; j < config.chunkSize; j++) {
+      tiles[i * config.chunkSize + j] = landscapeTiles[Math.ceil(Math.random() * landscapeTiles.length - 1)];
+    }
+  }
+  var chunk = {
+    tiles: tiles,
+    x: x,
+    y: y,
+    image: 'tiles',
+  };
+  console.log('Chunk generated');
   return chunk;
 }

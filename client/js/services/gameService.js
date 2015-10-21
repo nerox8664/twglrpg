@@ -1,6 +1,8 @@
 app
   .service('gameService', function($q, $http, $cookies, authService, socketService, Observable) {
     this.game = null;
+    this.config = {};
+
     this.init = (width, height, id) => {
       this.game = new Phaser.Game(
         width,
@@ -19,11 +21,14 @@ app
       console.log(chunk);
       this.map = this.game.add.tilemap();
       this.map.addTilesetImage(chunk.image);
-      this.layer = this.map.create(chunk.layerName, chunk.size[0], chunk.size[1], chunk.tileSize[0], chunk.tileSize[1]);
+      this.layer = this.map.create(
+        chunk.layerName,
+        this.config.chunkSize, this.config.chunkSize,
+        this.config.tileSize, this.config.tileSize);
       this.layer.resizeWorld();
-      for (var i = 0; i < chunk.size[1]; i++) {
-        for (var j = 0; j < chunk.size[0]; j++) {
-          this.map.putTile(chunk.tiles[(i * chunk.size[0] + j)] - 1 , j, i, this.layer);
+      for (var i = 0; i < this.config.chunkSize; i++) {
+        for (var j = 0; j < this.config.chunkSize; j++) {
+          this.map.putTile(chunk.tiles[(i * this.config.chunkSize + j)] , j, i, this.layer);
         }
       }
     }
@@ -35,27 +40,63 @@ app
 
     this.create = () => {
       this.cursors = this.game.input.keyboard.createCursorKeys();
-      socketService.socket.on('map.post', this.setMap);
-      socketService.action('map.get', {});
+      var config = this.config;
+      var setMap = this.setMap;
+      socketService.socket.emit('config.get', {}, function(data) {
+        config.chunkSize = data.chunkSize;
+        config.tileSize = data.tileSize;
+        console.log('Get config', data);
+      });
+      socketService.socket.emit('map.get', {x: 0, y: 0}, function(data) {
+        console.log('Get map');
+        setMap(data);
+      });
+      this.config.x = 0;
+      this.config.y = 0;
     }
 
     this.update = () => {
+      var setMap = this.setMap;
       if (this.cursors.left.isDown) {
+        this.config.x --;
+        socketService.socket.emit('map.get', {x: this.config.x, y: this.config.y},
+        function(data) {
+          console.log('Get map');
+          setMap(data);
+        });
         socketService.action('character.movement', {
           direction: 'left',
         });
       }
       if (this.cursors.right.isDown) {
+        this.config.x ++;
+        socketService.socket.emit('map.get', {x: this.config.x, y: this.config.y},
+        function(data) {
+          console.log('Get map');
+          setMap(data);
+        });
         socketService.action('character.movement', {
           direction: 'right',
         });
       }
       if (this.cursors.up.isDown) {
+        this.config.y --;
+        socketService.socket.emit('map.get', {x: this.config.x, y: this.config.y},
+        function(data) {
+          console.log('Get map');
+          setMap(data);
+        });
         socketService.action('character.movement', {
           direction: 'up',
         });
       }
       if (this.cursors.down.isDown) {
+        this.config.y ++;
+        socketService.socket.emit('map.get', {x: this.config.x, y: this.config.y},
+        function(data) {
+          console.log('Get map');
+          setMap(data);
+        });
         socketService.action('character.movement', {
           direction: 'down',
         });

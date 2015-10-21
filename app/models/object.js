@@ -10,10 +10,10 @@ var ObjectSchema = Schema({
     type: Number,
     required: true,
   },
-  class: [{
-    type: Schema.Types.ObjectId,
-    ref: 'ObjectClass',
-  }],
+  class: {
+    type: Number,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('Object', ObjectSchema, 'objects');

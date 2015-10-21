@@ -28,6 +28,4 @@ var UserSchema = new Schema({
   }],
 });
 
-UserSchema.plugin(require(__base + 'lib/mongoCache.js'));
-
 module.exports = mongoose.model('User', UserSchema, 'users');

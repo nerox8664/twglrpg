@@ -6,7 +6,7 @@ app
       if (data.token) {
         this.socket.emit(action, data);
       } else {
-        console.log('Action called, but token undefined');
+        console.log('Action called, but token is undefined');
       }
     };
   })
