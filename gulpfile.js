@@ -2,10 +2,11 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var wiredep = require('wiredep').stream;
-var less = require('gulp-less');
 var jscs = require('gulp-jscs');
+
+var less = require('gulp-less');
+var sourcemaps = require('gulp-sourcemaps');
 var babel = require('gulp-babel');
-var gls = require('gulp-live-server');
 var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
 var angularTemplates = require('gulp-angular-templates');
@@ -13,14 +14,16 @@ var gulpMarked = require('gulp-marked');
 var marked = require('marked');
 var renderer = new marked.Renderer();
 
+var gls = require('gulp-live-server');
+
 renderer.blockquote = function(quote) {
   return '<blockquote class="ui testimonial">\n' + quote + '</blockquote>\n';
 };
 
 gulp.task('markdown', function() {
   return gulp.src('./client/views/md/**/*.md')
-      .pipe(gulpMarked({ renderer: renderer }))
-      .pipe(gulp.dest('./client/views/'));
+    .pipe(gulpMarked({ renderer: renderer }))
+    .pipe(gulp.dest('./client/views/'));
 });
 
 gulp.task('overrideSemanticVariables', function() {
@@ -38,25 +41,32 @@ gulp.task('less', ['setSemanticTheme'], function() {
     .src('./client/styles/*.less')
     .pipe(wiredep())
     .pipe(less())
+    .pipe(sourcemaps.init())
     .pipe(concat('style.css'))
-    .pipe(minifyCSS())
+    .pipe(minifyCSS({
+      keepSpecialComments: false,
+    }))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('./public/stylesheets/'));
 });
 
+// Check JS style for server and client
 gulp.task('stylecheck', function() {
   return gulp
     .src(['./client/**/*.js', 'gulpfile.js', './app/**/*.js'])
     .pipe(jscs());
 });
 
-gulp.task('clientjs', ['stylecheck'], function() {
+// Translate client JS to ES5 with babel, concat to single file and minify
+gulp.task('prepare-client-JS', ['stylecheck'], function() {
   return gulp.src('./client/js/**/*.js')
     .pipe(babel())
     .pipe(concat('main.js'))
     .pipe(gulp.dest('./public/javascripts/'));
 });
 
-gulp.task('serverjs', ['stylecheck'], function() {
+// For old versions node.js
+gulp.task('prepare-server-JS', ['stylecheck'], function() {
   return gulp.src('./app/**/*.js')
     .pipe(babel())
     .pipe(gulp.dest('./build/'));
@@ -81,21 +91,23 @@ gulp.task('index', function() {
 
 var server;
 
-gulp.task('serve', ['clientjs', 'serverjs'], function() {
+function restartServer() {
+  if (server) {
+    server.stop();
+  }
   server = gls('./app/app.js', {
     env: {
       NODE_ENV: 'development',
     },
   });
   server.start();
-});
+};
 
-gulp.task('dev', ['serve'], function() {
-  gulp.watch('app/**/*.js', ['serverjs']);
+gulp.task('dev', ['prepare-client-JS'], function() {
 
   gulp.watch('client/views/**/*', ['angular-templates']);
   gulp.watch('client/styles/*.less', ['less']);
-  gulp.watch('client/js/**/*.js', ['clientjs']);
+  gulp.watch('client/js/**/*.js', ['prepare-client-JS']);
   gulp.watch('client/index.html', ['index']);
 
   gulp.watch([
@@ -103,8 +115,10 @@ gulp.task('dev', ['serve'], function() {
     './app/**/*.js',
   ], function() {
     console.log('Back-end reloaded...');
-    server.start();
+    restartServer();
   });
+
+  restartServer();
 });
 
-gulp.task('default', ['index', 'less', 'serverjs', 'clientjs', 'angular-templates', 'dev']);
+gulp.task('default', ['dev']);
