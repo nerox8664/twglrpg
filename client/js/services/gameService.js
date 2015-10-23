@@ -40,29 +40,26 @@ app
 
     this.create = () => {
       this.cursors = this.game.input.keyboard.createCursorKeys();
-      var config = this.config;
-      var setMap = this.setMap;
-      socketService.socket.emit('config.get', {}, function(data) {
-        config.chunkSize = data.chunkSize;
-        config.tileSize = data.tileSize;
+      socketService.socket.emit('config.get', {}, (data) => {
+        this.config.chunkSize = data.chunkSize;
+        this.config.tileSize = data.tileSize;
         console.log('Get config', data);
       });
-      socketService.socket.emit('map.get', {x: 0, y: 0}, function(data) {
+      socketService.socket.emit('map.get', {x: 0, y: 0}, (data) => {
         console.log('Get map');
-        setMap(data);
+        this.setMap(data);
       });
       this.config.x = 0;
       this.config.y = 0;
     }
 
     this.update = () => {
-      var setMap = this.setMap;
       if (this.cursors.left.isDown) {
         this.config.x --;
         socketService.socket.emit('map.get', {x: this.config.x, y: this.config.y},
-        function(data) {
+        (data) => {
           console.log('Get map');
-          setMap(data);
+          this.setMap(data);
         });
         socketService.action('character.movement', {
           direction: 'left',
@@ -71,9 +68,9 @@ app
       if (this.cursors.right.isDown) {
         this.config.x ++;
         socketService.socket.emit('map.get', {x: this.config.x, y: this.config.y},
-        function(data) {
+        (data) => {
           console.log('Get map');
-          setMap(data);
+          this.setMap(data);
         });
         socketService.action('character.movement', {
           direction: 'right',
@@ -82,9 +79,9 @@ app
       if (this.cursors.up.isDown) {
         this.config.y --;
         socketService.socket.emit('map.get', {x: this.config.x, y: this.config.y},
-        function(data) {
+        (data) => {
           console.log('Get map');
-          setMap(data);
+          this.setMap(data);
         });
         socketService.action('character.movement', {
           direction: 'up',
@@ -93,9 +90,9 @@ app
       if (this.cursors.down.isDown) {
         this.config.y ++;
         socketService.socket.emit('map.get', {x: this.config.x, y: this.config.y},
-        function(data) {
+        (data) => {
           console.log('Get map');
-          setMap(data);
+          this.setMap(data);
         });
         socketService.action('character.movement', {
           direction: 'down',
