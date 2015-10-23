@@ -4,6 +4,7 @@ var rename = require('gulp-rename');
 var wiredep = require('wiredep').stream;
 var jscs = require('gulp-jscs');
 
+// Client-side libraries
 var less = require('gulp-less');
 var sourcemaps = require('gulp-sourcemaps');
 var babel = require('gulp-babel');
@@ -14,29 +15,26 @@ var gulpMarked = require('gulp-marked');
 var marked = require('marked');
 var renderer = new marked.Renderer();
 
+// Server-side libraries
 var gls = require('gulp-live-server');
 
-renderer.blockquote = function(quote) {
-  return '<blockquote class="ui testimonial">\n' + quote + '</blockquote>\n';
-};
-
-gulp.task('markdown', function() {
+gulp.task('markdown', () => {
   return gulp.src('./client/views/md/**/*.md')
-    .pipe(gulpMarked({ renderer: renderer }))
+    .pipe(gulpMarked())
     .pipe(gulp.dest('./client/views/'));
 });
 
-gulp.task('overrideSemanticVariables', function() {
+gulp.task('overrideSemanticVariables', () => {
   return gulp.src('./client/styles/semantic/**/*')
     .pipe(gulp.dest('./components/semantic/src/'));
 });
 
-gulp.task('setSemanticTheme', ['overrideSemanticVariables'], function() {
+gulp.task('setSemanticTheme', ['overrideSemanticVariables'], () => {
   return gulp.src('./client/styles/semantic/**/*')
     .pipe(gulp.dest('./components/semantic/src/'));
 });
 
-gulp.task('less', ['setSemanticTheme'], function() {
+gulp.task('less', ['setSemanticTheme'], () => {
   return gulp
     .src('./client/styles/*.less')
     .pipe(wiredep())
@@ -51,14 +49,14 @@ gulp.task('less', ['setSemanticTheme'], function() {
 });
 
 // Check JS style for server and client
-gulp.task('stylecheck', function() {
+gulp.task('stylecheck', () => {
   return gulp
     .src(['./client/**/*.js', 'gulpfile.js', './app/**/*.js'])
     .pipe(jscs());
 });
 
 // Translate client JS to ES5 with babel, concat to single file and minify
-gulp.task('prepare-client-JS', ['stylecheck'], function() {
+gulp.task('prepare-client-JS', ['stylecheck'], () => {
   return gulp.src('./client/js/**/*.js')
     .pipe(babel())
     .pipe(concat('main.js'))
@@ -66,13 +64,13 @@ gulp.task('prepare-client-JS', ['stylecheck'], function() {
 });
 
 // For old versions node.js
-gulp.task('prepare-server-JS', ['stylecheck'], function() {
+gulp.task('prepare-server-JS', ['stylecheck'], () => {
   return gulp.src('./app/**/*.js')
     .pipe(babel())
     .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('angular-templates', ['markdown'], function() {
+gulp.task('angular-templates', ['markdown'], () => {
   return gulp
     .src('./client/views/**/*.html')
     .pipe(angularTemplates({
@@ -82,7 +80,7 @@ gulp.task('angular-templates', ['markdown'], function() {
     .pipe(gulp.dest('./public/javascripts/'));
 });
 
-gulp.task('index', function() {
+gulp.task('index', () => {
   return gulp
     .src('./client/index.html')
     .pipe(wiredep())
@@ -103,7 +101,7 @@ function restartServer() {
   server.start();
 };
 
-gulp.task('dev', ['prepare-client-JS'], function() {
+gulp.task('dev', ['prepare-client-JS'], () => {
 
   gulp.watch('client/views/**/*', ['angular-templates']);
   gulp.watch('client/styles/*.less', ['less']);
@@ -113,7 +111,7 @@ gulp.task('dev', ['prepare-client-JS'], function() {
   gulp.watch([
     './app/app.js',
     './app/**/*.js',
-  ], function() {
+  ], () => {
     console.log('Back-end reloaded...');
     restartServer();
   });

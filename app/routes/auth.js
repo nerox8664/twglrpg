@@ -52,7 +52,7 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  User.findOneInCache({
+  User.findOne({
     email: req.body.email,
     password: req.body.password,
   }, (err, user) => {
