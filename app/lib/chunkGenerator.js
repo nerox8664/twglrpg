@@ -1,15 +1,17 @@
 var Chunk = require(__base + 'models/chunk.js');
 
-function getBezierBasis(i, n, t) {
-  function f(n) {
-    return (n <= 1) ? 1 : n * f(n - 1);
-  }
-  return (f(n) / (f(i) * f(n - i))) * Math.pow(t, i) * Math.pow(1 - t, n - i);
-}
 
 function getBezierCurve(arr, step) {
-  if (step === undefined) {
-    step = 0.01;
+
+  var getBezierBasis = (i, n, t) => {
+    function f(n) {
+      return (n <= 1) ? 1 : n * f(n - 1);
+    }
+    return (f(n) / (f(i) * f(n - i))) * Math.pow(t, i) * Math.pow(1 - t, n - i);
+  }
+
+  if (!step) {
+    step = 0.1;
   }
 
   var res = [];

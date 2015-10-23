@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/rpg');
 
-glob('assets/map/*.json', function(er, files) {
+glob('assets/map/*.json', (er, files) => {
   files.forEach(function(file) {
     var chunk = require('../' + file);
 

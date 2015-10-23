@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require(__base + 'models/user.js');
 var multer  = require('multer');
-var upload = multer({ dest: __base + 'public/uploads/' });
+var upload = multer({ dest: appRoot + 'public/uploads/' });
 
 router.get('/:nick', function(req, res) {
   User
