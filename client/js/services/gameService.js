@@ -36,6 +36,7 @@ app
     this.preload = () => {
       this.game.load.image('tiles', '/assets/images/tileset.png');
       this.game.load.image('chars', '/assets/images/chars.png');
+      this.game.load.start();
     }
 
     this.create = () => {
