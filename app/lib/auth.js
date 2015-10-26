@@ -1,6 +1,6 @@
 var User = require(__base + 'models/user.js');
 var debug = require('debug')('auth');
-var jwt = require('jwt-simple');
+var Token = require(__base + 'lib/token.js');
 
 module.exports.onlyUsers = (req, res, next) => {
   if (req.user) {
@@ -15,19 +15,17 @@ module.exports.onlyUsers = (req, res, next) => {
 }
 
 module.exports.checkUser = (req, res, next) => {
-  if (req.cookies && req.cookies.token) {
-    debug('Token was given as client cookies: ' + req.cookies.token);
-    req.token = jwt.decode(req.cookies.token, config.jwtSecret);
-    if (req.token.expire > Math.floor(Date.now() / 1000)) {
-      debug('Token not expired: ' + req.token.expire);
-      User.findOne({_id: req.token.user}, (err, user) => {
+  req.token = new Token(req.cookies.token);
+  if (req.token.check()) {
+    User.findOne({_id: req.token.user}, (err, user) => {
+      if (err) {
+        next(err);
+      } else {
+        console.log('user set');
         req.user = user;
         next();
-      });
-    } else {
-      debug('Token expired: ' + req.token.expire);
-      next();
-    }
+      }
+    });
   } else {
     next();
   }

@@ -11,7 +11,7 @@ glob('assets/map/*.json', (er, files) => {
   files.forEach(function(file) {
     var chunk = require('../' + file);
 
-    var rePattern = new RegExp(/([\d]+),([\d]+)/i);
+    var rePattern = /([\d]+),([\d]+)/i;
     var arrMatches = file.match(rePattern);
     var position = [arrMatches[1], arrMatches[2]];
 

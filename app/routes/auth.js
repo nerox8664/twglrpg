@@ -1,54 +1,35 @@
 var express = require('express');
+var Token = require(__base + 'lib/token.js');
 var User = require(__base + 'models/user.js');
-var jwt = require('jwt-simple');
-var _ = require('lodash');
 
 var router = express.Router();
 
 router.get('/renew', (req, res) => {
-  if (req.user) {
-    req.token.expire = Math.floor(Date.now() / 1000) + config.cookieLifetime;
-    var token = jwt.encode(req.token, config.jwtSecret);
+  if (req.token.check()) {
     res.send({
-      token: token,
-      user: req.user,
+      token: req.token.serialize(),
     });
   } else {
     res
       .status(403)
       .send({
-        error: 'Auth failed or token expired',
+        error: 'Token expired',
       });
   }
 });
 
-router.post('/register', (req, res) => {
-  var user = new User({
-    email: req.body.email,
-    password: req.body.password,
-    nickname: req.body.nickname,
-  });
-
-  user.save((err, user) => {
-    console.log(err, user);
-    if (err) {
-      return res
-        .status(403)
-        .send({
-          error: 'Register failed',
-        });
-    }
-
-    var token = jwt.encode({
-      user: user._id,
-      expire: Math.floor(Date.now() / 1000) + config.cookieLifetime,
-    }, config.jwtSecret);
-
-    return res.send({
-      token: token,
-      user: user,
+router.get('/renew', (req, res) => {
+  if (req.token.check()) {
+    res.send({
+      token: req.token.serialize(),
     });
-  });
+  } else {
+    res
+      .status(403)
+      .send({
+        error: 'Token expired',
+      });
+  }
 });
 
 router.post('/login', (req, res) => {
@@ -57,13 +38,10 @@ router.post('/login', (req, res) => {
     password: req.body.password,
   }, (err, user) => {
     if (user) {
-      var token = jwt.encode({
-        user: user._id,
-        expire: Math.floor(Date.now() / 1000) + config.cookieLifetime,
-      }, config.jwtSecret);
+      var token = new Token();
+      token.user = user;
       res.send({
-        token: token,
-        user: user,
+        token: token.serialize(),
       });
     } else {
       res

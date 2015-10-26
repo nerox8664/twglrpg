@@ -54,7 +54,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/api/users', require(__base + 'routes/users.js'));
+app.use('/api/user', require(__base + 'routes/user.js'));
 app.use('/api/auth', require(__base + 'routes/auth.js'));
 app.use('/api/characters', auth.onlyUsers, require(__base + 'routes/character.js'));
 

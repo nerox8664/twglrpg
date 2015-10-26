@@ -6,12 +6,23 @@ app
     this.token.addObserver((token) => {
       $cookies.put('token', token);
       console.log('New token : ', token);
+      this.getUserData();
     });
+
+    this.getUserData = () => {
+      return $http
+        .get('/api/user', {})
+        .success((res) => {
+          console.log('User : ', res);
+          if (res.user) {
+            this.user.set(res.user);
+          }
+        });
+    }
 
     this.parseAuthData = (res) => {
       if (res.token) {
         this.token.set(res.token);
-        this.user.set(res.user);
       }
     };
 
