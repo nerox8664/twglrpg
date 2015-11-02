@@ -18,20 +18,6 @@ router.get('/renew', (req, res) => {
   }
 });
 
-router.get('/renew', (req, res) => {
-  if (req.token.check()) {
-    res.send({
-      token: req.token.serialize(),
-    });
-  } else {
-    res
-      .status(403)
-      .send({
-        error: 'Token expired',
-      });
-  }
-});
-
 router.post('/login', (req, res) => {
   User.findOne({
     email: req.body.email,

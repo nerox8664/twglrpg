@@ -18,8 +18,7 @@ router.get('/:nick', function(req, res) {
     })
 });
 
-
-router.post('/register', (req, res) => {
+router.post('/', (req, res) => {
   var user = new User({
     email: req.body.email,
     password: req.body.password,
@@ -36,13 +35,11 @@ router.post('/register', (req, res) => {
         });
     }
 
-    var token = jwt.encode({
-      user: user._id,
-      expire: Math.floor(Date.now() / 1000) + config.cookieLifetime,
-    }, config.jwtSecret);
+    var token = new Token();
+    token.user = user;
 
     return res.send({
-      token: token,
+      token: token.serialize(),
       user: user,
     });
   });
