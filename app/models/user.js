@@ -24,7 +24,7 @@ var UserSchema = new Schema({
   },
   characters: [{
     type: Schema.Types.ObjectId,
-    ref: 'Object',
+    ref: 'GameObject',
   }],
 });
 

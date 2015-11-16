@@ -23,10 +23,13 @@ module.exports = () => {
       if (err) {
         deferred.reject(err);
       } else if (!cachedChunk) {
-        cachedChunk = chunkGenerator(x, y);
-        chunks.insert(cachedChunk);
+        chunkGenerator(x, y).then(function(cachedChunk) {
+          chunks.insert(cachedChunk);
+          deferred.resolve(cachedChunk);
+        });
+      } else {
+        deferred.resolve(cachedChunk);
       }
-      deferred.resolve(cachedChunk);
     });
     return deferred.promise;
   }

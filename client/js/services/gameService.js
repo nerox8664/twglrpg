@@ -1,6 +1,7 @@
 app
   .service('gameService', function($q, $http, $cookies, authService, socketService, Observable) {
     this.game = null;
+    this.keys = {};
     this.config = {};
 
     this.init = (width, height, id) => {
@@ -52,10 +53,21 @@ app
       });
       this.config.x = 0;
       this.config.y = 0;
-    }
 
-    this.update = () => {
-      if (this.cursors.left.isDown) {
+      this.keys['w'] = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
+      this.keys['w'].onDown.add(() => {
+        this.config.y ++;
+        socketService.socket.emit('map.get', {x: this.config.x, y: this.config.y},
+        (data) => {
+          console.log('Get map');
+          this.setMap(data);
+        });
+        socketService.action('character.movement', {
+          direction: 'up',
+        });
+      }, this);
+      this.keys['a'] = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+      this.keys['a'].onDown.add(() => {
         this.config.x --;
         socketService.socket.emit('map.get', {x: this.config.x, y: this.config.y},
         (data) => {
@@ -65,8 +77,21 @@ app
         socketService.action('character.movement', {
           direction: 'left',
         });
-      }
-      if (this.cursors.right.isDown) {
+      }, this);
+      this.keys['s'] = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+      this.keys['s'].onDown.add(() => {
+        this.config.y --;
+        socketService.socket.emit('map.get', {x: this.config.x, y: this.config.y},
+        (data) => {
+          console.log('Get map');
+          this.setMap(data);
+        });
+        socketService.action('character.movement', {
+          direction: 'down',
+        });
+      }, this);
+      this.keys['d'] = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+      this.keys['d'].onDown.add(() => {
         this.config.x ++;
         socketService.socket.emit('map.get', {x: this.config.x, y: this.config.y},
         (data) => {
@@ -76,28 +101,21 @@ app
         socketService.action('character.movement', {
           direction: 'right',
         });
+      }, this);
+    }
+
+    this.update = () => {
+      if (this.cursors.left.isDown) {
+        this.game.camera.x -= 32;
+      }
+      if (this.cursors.right.isDown) {
+        this.game.camera.x += 32;
       }
       if (this.cursors.up.isDown) {
-        this.config.y --;
-        socketService.socket.emit('map.get', {x: this.config.x, y: this.config.y},
-        (data) => {
-          console.log('Get map');
-          this.setMap(data);
-        });
-        socketService.action('character.movement', {
-          direction: 'up',
-        });
+        this.game.camera.y -= 32;
       }
       if (this.cursors.down.isDown) {
-        this.config.y ++;
-        socketService.socket.emit('map.get', {x: this.config.x, y: this.config.y},
-        (data) => {
-          console.log('Get map');
-          this.setMap(data);
-        });
-        socketService.action('character.movement', {
-          direction: 'down',
-        });
+        this.game.camera.y += 32;
       }
     }
 

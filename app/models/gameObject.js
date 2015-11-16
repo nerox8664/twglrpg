@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var ObjectSchema = Schema({
+var GameObjectSchema = Schema({
   positionX: {
     type: Number,
     required: true,
@@ -16,4 +16,4 @@ var ObjectSchema = Schema({
   },
 });
 
-module.exports = mongoose.model('Object', ObjectSchema, 'objects');
+module.exports = mongoose.model('GameObject', GameObjectSchema, 'gameObjects');

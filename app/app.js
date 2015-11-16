@@ -74,7 +74,7 @@ io.on('connection', (socket) => {
   require(__base + 'events/client.js')(socket, gameService);
 });
 
-server.listen(8089, () => {
+server.listen(config.port, () => {
   debug('Binded to port');
 });
 

@@ -45,9 +45,17 @@ router.post('/', (req, res) => {
   });
 });
 
-router.post('/profile', upload.single('avatar'), function(req, res, next) {
-  // req.file is the `avatar` file
-  // req.body will hold the text fields, if there were any
-})
+router.put('/', multer({
+  dest: './uploads/',
+  limits: {
+    fieldNameSize: 100,
+    fileSize: 1048576,
+    files: 1,
+    fields: 1,
+  },
+}).single('avatar'), function(req, res, next) {
+  req.user.avatar = req.file.filename;
+  req.user.nickname = req.body.nickname;
+});
 
 module.exports = router;
