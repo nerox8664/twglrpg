@@ -25,7 +25,8 @@ app
       this.layer = this.map.create(
         chunk.layerName,
         this.config.chunkSize, this.config.chunkSize,
-        this.config.tileSize, this.config.tileSize);
+        this.config.tileSize, this.config.tileSize
+      );
       this.layer.resizeWorld();
       for (var i = 0; i < this.config.chunkSize; i++) {
         for (var j = 0; j < this.config.chunkSize; j++) {

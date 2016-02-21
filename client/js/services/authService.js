@@ -65,7 +65,7 @@ app
 
     this.register = (email, password, nickname) => {
       return $http
-        .post('/api/auth/register', {
+        .post('/api/user', {
           email: email,
           password: password,
           nickname: nickname,

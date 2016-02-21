@@ -13,7 +13,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 // Global path configuration
-global.appRoot = __dirname + '/../'
+global.appRoot = __dirname + '/../';
 global.__base = __dirname + '/';
 global.config = require(__dirname + '/config.js');
 
@@ -62,7 +62,7 @@ app.get('/*', (req, res) => {
   res
     .status(200)
     .set({
-      'content-type': 'text/html; charset=utf-8'
+      'content-type': 'text/html; charset=utf-8',
     })
     .sendFile(path.normalize(appRoot + 'public/index.html'));
 });

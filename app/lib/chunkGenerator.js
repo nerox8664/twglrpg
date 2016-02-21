@@ -68,16 +68,16 @@ function generateRoads(x, y, tiles) {
         borders.push([Math.random() * (config.chunkSize - 1), config.chunkSize - 1]);
       }
       if (results[3]) {
-        for (var i = 0; i < config.chunkSize * config.chunkSize; i += config.chunkSize) {
+        for (var i = config.chunkSize - 1; i < config.chunkSize * config.chunkSize; i += config.chunkSize) {
           if (isRoad(results[3].tiles[i + config.chunkSize - 1])) {
-            borders.push([0, i / config.chunkSize]);
+            borders.push([0, Math.floor(i / config.chunkSize)]);
           }
         }
       } else if (Math.random() > 0.4) {
         borders.push([0, Math.random() * (config.chunkSize - 1)]);
       }
 
-      if (Math.random()) {
+      if (Math.random() > 0.4 && borders.length == 0) {
         borders.push(
           [
             Math.random() * (config.chunkSize - 1),
@@ -86,7 +86,6 @@ function generateRoads(x, y, tiles) {
         );
       }
 
-      console.log('borders', borders);
 
       var road = getBezierCurve(
         borders,
@@ -114,13 +113,14 @@ module.exports = (x, y) => {
   }
 
   return generateRoads(x, y, tiles).then(function() {
-    var chunk = {
+    var chunk = new Chunk({
       tiles: tiles,
       x: x,
       y: y,
       image: 'tiles',
-    };
+    });
     console.log('Chunk generated');
+
     return chunk;
   })
 }

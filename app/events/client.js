@@ -1,19 +1,17 @@
 module.exports = (socket, gameService) => {
 
-  socket.on('character.online', function(data, cb) {
+  socket.on('character.online', (data, cb) => {
     cb(true);
   });
 
-  socket.on('config.get', function(data, cb) {
+  socket.on('config.get', (data, cb) => {
     cb({
       chunkSize: config.chunkSize,
       tileSize: config.tileSize,
     });
   });
 
-  socket.on('map.get', function(data, cb) {
-    console.log(data);
-
+  socket.on('map.get', (data, cb) => {
     if (!data.x) {
       data.x = 0;
     }
